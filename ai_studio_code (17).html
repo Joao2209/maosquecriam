@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mãos que Criam Arte | Projeto Social Profissionalizante</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #040d08; 
+            --bg-gradient: radial-gradient(circle at top right, #0e2a1b, #040d08);
+            --accent-gold: #f1c40f; 
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Tela de Inicialização (Intro) */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease-out, visibility 1s;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .intro-content h2 {
+            color: var(--accent-gold);
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 0.5s;
+        }
+
+        .intro-content p {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards 1.2s;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Estilos Gerais do Site */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        body { background: var(--bg-gradient); background-attachment: fixed; color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; letter-spacing: 1px; }
+
+        header { padding: 2rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+        .logo { font-size: 1.5rem; text-transform: uppercase; font-weight: 700; }
+        .logo span { color: var(--accent-gold); display: block; font-size: 0.75rem; letter-spacing: 2px; font-weight: 400; margin-top: 5px; }
+        
+        nav a { color: var(--text-main); text-decoration: none; margin-left: 30px; font-size: 0.85rem; text-transform: uppercase; transition: 0.3s; }
+        nav a:hover { color: var(--accent-gold); }
+
+        .hero { padding: 120px 5% 60px; max-width: 1200px; }
+        .prefeitura-tag { color: var(--accent-gold); text-transform: uppercase; font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; margin-bottom: 25px; display: block; border-left: 2px solid var(--accent-gold); padding-left: 15px; }
+        .hero h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 30px; }
+        .hero p { font-size: 1.2rem; color: var(--text-dim); max-width: 650px; margin-bottom: 40px; }
+
+        .btn-gold { 
+            background-color: var(--accent-gold); 
+            color: #040d08; 
+            padding: 18px 45px; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            font-weight: bold; 
+            display: inline-block; 
+            transition: 0.4s; 
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        .btn-gold:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(241, 196, 15, 0.3); }
+
+        /* Impact Cards */
+        .impact-cards { padding: 60px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .impact-card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--border); 
+            padding: 60px 40px; 
+            border-radius: 20px; 
+            text-align: center;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .impact-card:hover { border-color: var(--accent-gold); background: rgba(255,255,255,0.06); }
+        .impact-card p { font-size: 1.3rem; font-family: 'Playfair Display', serif; font-style: italic; color: #fff; line-height: 1.4; }
+
+        /* Social Section */
+        .social-section { padding: 100px 5%; text-align: center; background: rgba(0,0,0,0.2); }
+        .social-content { max-width: 800px; margin: 0 auto; }
+        .social-content h2 { font-size: 3rem; margin-bottom: 30px; color: var(--accent-gold); }
+        .social-content p { font-size: 1.2rem; color: var(--text-dim); margin-bottom: 40px; }
+
+        /* Donation Box */
+        .donation-section { padding: 100px 5%; }
+        .donation-box { 
+            background: var(--accent-gold); 
+            color: #040d08; 
+            padding: 60px; 
+            border-radius: 24px; 
+            text-align: center; 
+            max-width: 850px; 
+            margin: 0 auto; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5); 
+        }
+        .pix-area { 
+            background: rgba(0,0,0,0.08); 
+            padding: 25px; 
+            font-family: monospace; 
+            font-size: 1.8rem; 
+            margin: 30px 0; 
+            border-radius: 12px; 
+            border: 2px dashed rgba(0,0,0,0.3); 
+            font-weight: bold;
+        }
+
+        /* WhatsApp Flutuante */
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px;
+            background-color: #25d366; color: white;
+            width: 65px; height: 65px; border-radius: 50px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            z-index: 9999; transition: 0.3s; text-decoration: none;
+        }
+
+        footer { padding: 60px 5%; text-align: center; color: var(--text-dim); border-top: 1px solid var(--border); }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .social-content h2 { font-size: 2.2rem; }
+            header { flex-direction: column; gap: 20px; }
+            .pix-area { font-size: 1.2rem; }
+            .intro-content h2 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TELA DE INICIALIZAÇÃO (INTRO) -->
+    <div id="intro-screen">
+        <div class="intro-content">
+            <h2>Parabéns!</h2>
+            <p>Seja muito bem-vindo ao projeto<br><strong>Mãos que Criam Arte</strong></p>
+        </div>
+    </div>
+
+    <!-- WhatsApp Flutuante -->
+    <a href="https://api.whatsapp.com/send/?phone=5511946454891&text=Ol%C3%A1%21+Gostaria+de+saber+mais+sobre+o+projeto+M%C3%A3os+que+Criam+Arte." class="whatsapp-float" target="_blank">
+        <svg fill="#fff" width="35px" height="35px" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217s.231.006.332.013c.101.007.237-.038.37.283.144.35.491 1.2.534 1.287s.072.188.014.304c-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.548-.68.116-.173.231-.144.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/></svg>
+    </a>
+
+    <header>
+        <div class="logo">
+            Mãos que Criam Arte
+            <span>São Paulo / Cultural e Social</span>
+        </div>
+        <nav>
+            <a href="#projeto">O Projeto</a>
+            <a href="#impacto">Missão</a>
+            <a href="#social">Apoio Social</a>
+            <a href="#contato">Falar Conosco</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="projeto">
+            <span class="prefeitura-tag">Iniciativa e Patrocínio: Prefeitura de SP</span>
+            <h1>Mãos que produzem cultura e dignidade.</h1>
+            <p>Capacitamos mães solo através da economia criativa e do ensino profissionalizante. Um ciclo de transformação que une talento manual e assistência social.</p>
+            <a href="https://api.whatsapp.com/send/?phone=5511946454891" class="btn-gold" target="_blank">Seja um Parceiro</a>
+        </section>
+
+        <section class="impact-cards" id="impacto">
+            <div class="impact-card">
+                <p>"Nossa oficina: o local onde o ensino se transforma em profissão."</p>
+            </div>
+            <div class="impact-card">
+                <p>"Produção de cocares: resgatando cultura e gerando renda."</p>
+            </div>
+            <div class="impact-card">
+                <p>"O detalhe de cada peça carrega a história de superação de uma mãe."</p>
+            </div>
+        </section>
+
+        <section class="social-section" id="social">
+            <div class="social-content">
+                <span class="prefeitura-tag">Cuidado Integral</span>
+                <h2>Mais que técnica, oferecemos cuidado.</h2>
+                <p>O projeto <strong>Mãos que Criam Arte</strong> garante suporte alimentar e acolhimento comunitário para todas as participantes, assegurando dignidade básica para o desenvolvimento profissional.</p>
+                <a href="https://api.whatsapp.com/send/?phone=5511946454891" class="btn-gold" target="_blank">Saiba como ajudar</a>
+            </div>
+        </section>
+
+        <section class="donation-section" id="contato">
+            <div class="donation-box">
+                <h2 style="font-size: 2.5rem;">Apoie esta Causa</h2>
+                <p style="margin-top: 15px; opacity: 0.9;">Sua contribuição via PIX ajuda na manutenção das nossas oficinas e compra de insumos.</p>
+                
+                <div class="pix-area">CNPJ: 52.898.704/0001-27</div>
+
+                <p style="font-weight: 600; margin-bottom: 30px; text-transform: uppercase;">Mãos que Criam Arte | São Paulo - SP</p>
+
+                <a href="https://api.whatsapp.com/send/?phone=5511946454891" class="btn-gold" style="background: #000; color: #fff;" target="_blank">Falar no WhatsApp</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p><strong>Mãos que Criam Arte</strong></p>
+        <p style="margin-top: 10px; opacity: 0.6;">Apoio Institucional: Secretaria de Cultura e Assistência Social de São Paulo</p>
+        <div style="margin: 30px auto; width: 40px; height: 1px; background: var(--accent-gold);"></div>
+        <p style="font-size: 0.7rem; text-transform: uppercase;">CNPJ: 52.898.704/0001-27 | © 2025</p>
+    </footer>
+
+    <!-- Script para remover a tela de introdução -->
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const intro = document.getElementById('intro-screen');
+                intro.style.opacity = '0';
+                setTimeout(function() {
+                    intro.style.visibility = 'hidden';
+                }, 1000);
+            }, 3500); // Fica visível por 3.5 segundos
+        });
+    </script>
+
+</body>
+</html>
